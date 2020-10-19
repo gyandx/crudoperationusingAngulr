@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'Crud Application Using Angular-In-Memory-Web-Api';
+  title = 'Crud Application Using Angular-In-Memory-Web-Api'; //title of the project
   player : Player[] = []; //player variable is of Player class type
   playerId: number = null        //variable to store player id
   show: string = 'none'; // To show the add Data form
