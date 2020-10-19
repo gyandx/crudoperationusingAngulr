@@ -1,0 +1,17 @@
+.errorText{
+  color: red;
+  font-weight: bold;
+}
+
+#tdRow{
+  cursor: pointer;
+}
+
+#tdRow:hover{
+  background-color: rgb(213, 235, 240);
+  transform: scale(1.1);
+}
+
+#tdColor:hover{
+  color: blue;
+}

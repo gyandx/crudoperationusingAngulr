@@ -1,0 +1,150 @@
+
+<div class="d-flex justify-content-center">
+  <h4 style="color: rgb(18, 174, 221);">{{title}}</h4>
+  <a style="color: darkolivegreen;cursor: pointer;" class="ml-4 mr-4" (click)="showForm()">
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+    </svg>Add Data
+  </a>
+  <!--Toaster Msg for different actions-->
+  <h4 style="color: green;" *ngIf="toast">Data Added Successfully</h4>
+  <h4 style="color: green;" *ngIf="toastUpdate">Data Updated Successfully</h4>
+  <h4 style="color: green;" *ngIf="toastDel">Data Deleted Successfully</h4>
+  <!--End Toaster-->
+</div>
+
+<!--Table for showing Player Data-->
+<table class="table table-hover">
+  <thead class="table-warning">
+    <tr>
+      <th scope="col">Sl.No</th>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Team</th>
+      <th scope="col">Type</th>
+      <th scope="col">Average</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="tdRow" *ngFor="let data of player; let i=index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{data?.id}}</td>
+      <td id="tdColor" (click)="getPlayer(data?.id)" data-toggle="modal" data-target="#playerModal">{{data?.name}}</td>
+      <td>{{data?.team}}</td>
+      <td>{{data?.type}}</td>
+      <td>{{data?.average}}</td>
+      <td>
+        <a style="color: rgb(6, 90, 34);" (click)="updatePlayer(data)"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg></a>
+      </td>
+      <td>
+        <a style="color: darkred;" (click)="deletePlayer(data?.id)"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+        </svg></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!--Table End-->
+
+<!--Add Form Link-->
+<div class="d-flex justify-content-center mt-6" >
+  <h4 style="color: teal;" [ngStyle]="{'display': show}">Add Form</h4>
+  <a style="color:red;cursor: pointer;" class="ml-4" (click)="hideForm()" [ngStyle]="{'display': show}">
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </a>
+</div>
+<!--End Link-->
+
+<!--Add Forms-->
+<div class="d-flex justify-content-center mt-6">
+  <form [formGroup]="addDataForm" (ngSubmit)="createPlayer(addDataForm)" [ngStyle]="{'display': show}">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputId">Id</label>
+        <input type="text" class="form-control" id="inputId" formControlName="id" (change)="checkMatch($event.target.value)" required>
+        <p class="errorText" *ngIf="getControls().id.invalid && (getControls().id.dirty || getControls().id.touched); else ElseBlock">ID IS REQUIRED</p>
+        <ng-template #ElseBlock>
+          <p class="errorText" *ngIf="idMatch">ID IS ALREADY IN USE PLEASE SELECT ANOTHER</p>
+        </ng-template>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputName">Name</label>
+        <input type="text" class="form-control" id="inputName" formControlName="name" required>
+        <p class="errorText" *ngIf="getControls().name.invalid && (getControls().name.dirty || getControls().name.touched)">NAME IS REQUIRED</p>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputType">Type</label>
+        <select id="inputType" class="form-control" formControlName="type" required>
+          <option selected>Chose..</option>
+          <option *ngFor="let type of types">{{type}}</option>
+        </select>
+        <p class="errorText" *ngIf="getControls().type.invalid && getControls().type.touched">TYPE IS REQUIRED</p>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputTeam">Team</label>
+        <select id="inputType" class="form-control" formControlName="team" required>
+          <option selected>Chose..</option>
+          <option *ngFor="let data of teams">{{data}}</option>
+        </select>
+        <p class="errorText" *ngIf="getControls().team.invalid && (getControls().team.dirty || getControls().team.touched)">TEAM IS REQUIRED</p>
+      </div>
+      <div class="form-group col-md-12">
+        <label for="inputAvg">Average</label>
+        <input type="number" class="form-control" id="inputAvg" formControlName="average" min="1">
+        <p class="errorText" *ngIf="getControls().average.invalid && (getControls().average.dirty || getControls().average.touched)">AVERAGE IS REQUIRED</p>
+      </div>
+    </div>
+    <button type="submit" [disabled]="addDataForm.invalid || idMatch" class="btn btn-success col-md-12">Add</button>
+  </form>
+</div>
+<!--Form End-->
+<router-outlet></router-outlet>
+
+<!--modal to show player detail on row click-->
+<!-- Modal -->
+<div class="modal" id="playerModal" [style.display]="showModal ? 'block' : 'none'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Player Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addDataForm">
+          <div class="form-group">
+            <label for="addDataForm" class="col-form-label">Id:</label>
+            <input type="text" class="form-control" id="addDataForm" formControlName="id" readonly>
+          </div>
+          <div class="form-group">
+            <label for="inputName" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="inputName" formControlName="name" readonly>
+          </div>
+          <div class="form-group">
+            <label for="inputTeam" class="col-form-label">Team:</label>
+            <input type="text" class="form-control" id="inputTeam" formControlName="team" readonly>
+          </div>
+          <div class="form-group">
+            <label for="inputType" class="col-form-label">Type:</label>
+            <input type="text" class="form-control" id="inputType" formControlName="type" readonly>
+          </div>
+          <div class="form-group">
+            <label for="inputAvg" class="col-form-label">Average:</label>
+            <input type="text" class="form-control" id="inputAvg" formControlName="average" readonly>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End Modal-->
